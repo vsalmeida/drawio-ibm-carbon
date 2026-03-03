@@ -5,49 +5,49 @@ module.exports = {
     node: true,
     jest: true,
   },
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2022,
-    sourceType: "module",
+    sourceType: 'module',
   },
   extends: [
-    "airbnb-base",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier",
+    'airbnb-base',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'prettier',
   ],
-  plugins: ["@typescript-eslint", "prettier"],
+  plugins: ['@typescript-eslint', 'prettier'],
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".ts"],
+        extensions: ['.js', '.ts'],
       },
     },
   },
   rules: {
-    "func-style": ["error", "expression"],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
+    'func-style': ['error', 'expression'],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
       {
-        js: "always",
-        ts: "never",
+        js: 'never',
+        ts: 'never',
       },
     ],
-    "import/no-unresolved": "off",
-    "import/prefer-default-export": "off",
-    "no-underscore-dangle": "off",
-    "no-restricted-syntax": "off",
-    "no-loop-func": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-    "prettier/prettier": [
-      "error",
+    'import/no-unresolved': 'off',
+    'import/prefer-default-export': 'off',
+    'no-underscore-dangle': 'off',
+    'no-restricted-syntax': 'off',
+    'no-loop-func': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'prettier/prettier': [
+      'error',
       {
-        endOfLine: "lf",
+        endOfLine: 'lf',
       },
     ],
-    "max-len": [
-      "warn",
+    'max-len': [
+      'warn',
       {
         code: 80,
         tabWidth: 2,
@@ -60,15 +60,15 @@ module.exports = {
         ignoreRegExpLiterals: true,
       },
     ],
-    "no-console": "off",
+    'no-console': 'off',
   },
   overrides: [
     {
-      files: ["*.ts"],
+      files: ['*.ts'],
       rules: {
-        "no-undef": "off",
+        'no-undef': 'off',
       },
     },
   ],
-  ignorePatterns: ["dist/", "node_modules/", "*.js", "!.eslintrc.js"],
+  ignorePatterns: ['dist/', 'node_modules/', '*.js', '!.eslintrc.js'],
 };
