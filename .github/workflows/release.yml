@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (e.g. v1.0.0)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn generate
+
+      - name: Bundle libraries
+        run: cd output && zip -r ../ibm-carbon-drawio-libs.zip .
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: ibm-carbon-drawio-libs.zip
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          generate_release_notes: true

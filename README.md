@@ -18,17 +18,18 @@
 
 1. [About The Project](#about-the-project)
    - [Built With](#built-with)
-2. [Getting Started](#getting-started)
+2. [Download](#download)
+3. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Installation](#installation)
-3. [Usage](#usage)
-4. [Customization](#customization)
+4. [Usage](#usage)
+5. [Customization](#customization)
    - [Per-Category Style Overrides](#per-category-style-overrides)
    - [Global Defaults](#global-defaults)
    - [Group Shapes](#group-shapes)
-5. [Project Structure](#project-structure)
-6. [Contributing](#contributing)
-7. [License](#license)
+6. [Project Structure](#project-structure)
+7. [Contributing](#contributing)
+8. [License](#license)
 
 ## About The Project
 
@@ -48,6 +49,17 @@ This tool generates [draw.io](https://draw.io) (diagrams.net) custom shape libra
 | **[TypeScript](https://www.typescriptlang.org/)**                        | Type-safe development.                                 |
 | **[tsx](https://github.com/privatenumber/tsx)**                          | TypeScript execution without a build step.             |
 | **[eslint](https://eslint.org/)** + **[prettier](https://prettier.io/)** | Linting and code formatting.                           |
+
+## Download
+
+Don't want to build from source? Grab the pre-built libraries from the [latest release](../../releases/latest):
+
+1. Download `ibm-carbon-drawio-libs.zip` from the release assets
+2. Extract the archive
+3. In draw.io, go to **File → Open Library from → Device**
+4. Select all extracted `.xml` files at once — each becomes a separate library panel in the sidebar
+
+The rest of this README covers building and customizing the libraries from source.
 
 ## Getting Started
 
