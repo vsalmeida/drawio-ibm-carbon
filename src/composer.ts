@@ -1,4 +1,4 @@
-import type { StyleConfig } from './config';
+import type { GroupStyleConfig, StyleConfig } from './config';
 import type { ParsedSvg, SvgCommand, SvgElement } from './svgParser';
 
 const fmt = (n: number): string => {
@@ -169,6 +169,62 @@ export const createStencilXml = (
     `<constraint x="0" y="0.5" perimeter="0" name="W"/>`,
     `<constraint x="1" y="0.5" perimeter="0" name="E"/>`,
     `</connections>`,
+    `</shape>`,
+  ].join('');
+};
+
+/**
+ * Creates a draw.io stencil for the strip + icon block of a
+ * group. The stencil is just the colored vertical strip
+ * (top-left) and the icon next to it; the group border lives
+ * on a separate outer mxCell so it can resize independently.
+ *
+ * Stencil dimensions: (stripWidth + iconPaddingLeft + iconSize)
+ * x stripHeight.
+ */
+export const createGroupStencilXml = (
+  parsed: ParsedSvg,
+  config: GroupStyleConfig
+): string => {
+  const {
+    stripWidth,
+    stripHeight,
+    stripColor,
+    iconColor,
+    iconSize,
+    iconPaddingLeft,
+  } = config;
+
+  const stencilW = stripWidth + iconPaddingLeft + iconSize;
+  const stencilH = stripHeight;
+
+  const { w: vbW, h: vbH } = parsed.viewBox;
+  const scale = iconSize / Math.max(vbW, vbH);
+  const scaledH = vbH * scale;
+  const offsetX = stripWidth + iconPaddingLeft;
+  const offsetY = (stripHeight - scaledH) / 2;
+
+  const iconShapes = parsed.elements
+    .map((el) => elementToXml(el, scale, offsetX, offsetY))
+    .join('');
+
+  return [
+    `<shape aspect="fixed" w="${stencilW}" h="${stencilH}">`,
+    `<background>`,
+    `<rect x="0" y="0" w="${stencilW}" h="${stencilH}"/>`,
+    `</background>`,
+    `<foreground>`,
+    `<save/>`,
+    `<fillcolor color="${stripColor}"/>`,
+    `<rect x="0" y="0" w="${stripWidth}" h="${stripHeight}"/>`,
+    `<fill/>`,
+    `<restore/>`,
+    `<save/>`,
+    `<fillcolor color="${iconColor}"/>`,
+    `<strokecolor color="${iconColor}"/>`,
+    iconShapes,
+    `<restore/>`,
+    `</foreground>`,
     `</shape>`,
   ].join('');
 };

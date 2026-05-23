@@ -2,9 +2,19 @@ import rawMetadata from '@carbon/icons/metadata.json';
 
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { CONFIG, getStyleForCategory } from './config';
-import { createStencilXml } from './composer';
-import { generateLibraryXml, type Shape } from './generator';
+import {
+  CONFIG,
+  getGroupName,
+  getGroupStyleForSubcategory,
+  getStyleForCategory,
+} from './config';
+import { createGroupStencilXml, createStencilXml } from './composer';
+import {
+  generateGroupLibraryXml,
+  generateLibraryXml,
+  type GroupShape,
+  type Shape,
+} from './generator';
 import { parseSvgContent } from './svgParser';
 
 interface IconAsset {
@@ -33,6 +43,12 @@ const metadata = rawMetadata as CarbonMetadata;
 const sanitizeFilename = (name: string): string =>
   // eslint-disable-next-line no-control-regex
   name.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-').trim();
+
+const cleanLabel = (name: string): string =>
+  name
+    .replace(/[®™©℠]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 /**
  * Returns the asset with the preferred size (default 32px),
@@ -85,7 +101,7 @@ const main = (): void => {
         const parsed = parseSvgContent(rawSvg);
         const stencilXml = createStencilXml(parsed, style);
         acc.push({
-          title: icon.friendlyName,
+          title: cleanLabel(icon.friendlyName),
           stencilXml,
           width: style.bgSize,
           height: style.bgSize,
@@ -112,9 +128,77 @@ const main = (): void => {
     totalFiles += 1;
   }
 
+  const iconIndex = new Map<string, IconMeta>();
+  for (const icon of active) iconIndex.set(icon.name, icon);
+
+  const groupSubcategories = Object.entries(CONFIG.groups).sort(([a], [b]) =>
+    a.localeCompare(b)
+  );
+
+  const groupShapes: GroupShape[] = [];
+
+  for (const [subcategory, entries] of groupSubcategories) {
+    if (CONFIG.excludeCategories.includes(subcategory)) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    for (const entry of entries) {
+      const name = getGroupName(entry);
+      const icon = iconIndex.get(name);
+      if (!icon) {
+        console.warn(
+          `  ! group "${name}" not found in Carbon icons (${subcategory})`
+        );
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      const asset = getBestAsset(icon.assets);
+      if (!asset) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      const overrides = typeof entry === 'string' ? undefined : entry.overrides;
+      const style = getGroupStyleForSubcategory(subcategory, overrides);
+      const parsed = parseSvgContent(asset.optimized.data);
+      const stencilXml = createGroupStencilXml(parsed, style);
+
+      const friendly = cleanLabel(icon.friendlyName);
+      groupShapes.push({
+        title: friendly,
+        label: friendly,
+        stencilXml,
+        width: style.width,
+        height: style.height,
+        bgColor: style.borderColor,
+        borderWidth: style.borderWidth,
+        iconCellWidth:
+          style.stripWidth + style.iconPaddingLeft + style.iconSize,
+        iconCellHeight: style.stripHeight,
+        labelGap: style.labelGap,
+        fontSize: style.fontSize,
+      });
+    }
+  }
+
+  if (groupShapes.length > 0) {
+    const libraryName = `${CONFIG.prefix} - Groups`;
+    const filename = join(
+      CONFIG.outputDir,
+      `${sanitizeFilename(libraryName)}.xml`
+    );
+
+    writeFileSync(filename, generateGroupLibraryXml(groupShapes), 'utf8');
+    console.log(`  + ${libraryName} (${groupShapes.length} groups)`);
+  }
+
   console.log(
     `\nDone! ${totalFiles} libraries generated with ${totalIcons} icons total.`
   );
+  if (groupShapes.length > 0) {
+    console.log(`      1 groups library with ${groupShapes.length} groups.`);
+  }
   console.log(`Output: ${CONFIG.outputDir}/`);
 };
 
