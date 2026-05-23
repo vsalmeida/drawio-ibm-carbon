@@ -3,7 +3,23 @@
   "version": "1.0.0",
   "description": "Generate draw.io libraries from IBM Carbon Design System icons",
   "license": "Apache-2.0",
+  "author": "vsalmeida",
+  "repository": "github:vsalmeida/drawio-ibm-carbon",
+  "homepage": "https://github.com/vsalmeida/drawio-ibm-carbon",
+  "bugs": "https://github.com/vsalmeida/drawio-ibm-carbon/issues",
+  "keywords": [
+    "drawio",
+    "diagrams",
+    "diagrams-net",
+    "ibm-carbon",
+    "carbon-design-system",
+    "icons",
+    "shape-library"
+  ],
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "generate": "tsx src/index.ts",
     "lint": "eslint ."

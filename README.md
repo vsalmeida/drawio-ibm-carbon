@@ -5,8 +5,6 @@
     Generate draw.io shape libraries from <br />
     IBM Carbon Design System icons
     <br />
-    <a href="#"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="/../../issues">Report Bug</a>
     ·
@@ -73,7 +71,7 @@ The rest of this README covers building and customizing the libraries from sourc
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-org/drawio-ibm-carbon.git
+git clone https://github.com/vsalmeida/drawio-ibm-carbon.git
 cd drawio-ibm-carbon
 ```
 
