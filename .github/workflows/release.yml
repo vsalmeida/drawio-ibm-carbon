@@ -29,7 +29,7 @@ jobs:
       - name: Bundle libraries
         run: cd output && zip -r ../ibm-carbon-drawio-libs.zip .
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: ibm-carbon-drawio-libs.zip
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
