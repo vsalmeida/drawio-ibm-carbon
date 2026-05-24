@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@carbon/icons@^11.76.0":
-  version "11.76.0"
-  resolved "https://registry.yarnpkg.com/@carbon/icons/-/icons-11.76.0.tgz#4266810f59a4105dfe18546059daafd8c2c73732"
-  integrity sha512-e9XnUWPgxsyvgCL/ti/Ee2fItqRs/WrHkwy7GPqbEGdGZKSd9pBvO+jN7nxBT5TLdA50q26t5hR0U2taEyc5Kg==
+"@carbon/icons@^11.81.0":
+  version "11.81.0"
+  resolved "https://registry.yarnpkg.com/@carbon/icons/-/icons-11.81.0.tgz#9f93ee144271146b50561636c71f33c922076d00"
+  integrity sha512-LPdzRQhnGXAJm9uNXX8JGLEyaIAg5sPeo3LVVGIQ6gn5AKH0/wOTez+abJ+qiURVr1CfRSQNJNYkXcmbxIFADg==
   dependencies:
     "@ibm/telemetry-js" "^1.5.0"
 
