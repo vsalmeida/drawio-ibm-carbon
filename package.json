@@ -1,6 +1,6 @@
 {
   "name": "drawio-ibm-carbon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Generate draw.io libraries from IBM Carbon Design System icons",
   "license": "Apache-2.0",
   "author": "vsalmeida",
