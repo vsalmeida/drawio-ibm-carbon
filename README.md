@@ -25,16 +25,15 @@
    - [Per-Category Style Overrides](#per-category-style-overrides)
    - [Global Defaults](#global-defaults)
    - [Group Shapes](#group-shapes)
-6. [Project Structure](#project-structure)
-7. [Contributing](#contributing)
-8. [License](#license)
+6. [Contributing](#contributing)
+7. [License](#license)
 
 ## About The Project
 
 This tool generates [draw.io](https://draw.io) (diagrams.net) custom shape libraries (`.xml`) from the full set of [IBM Carbon Design System](https://carbondesignsystem.com/) icons.
 
-- **2,500+ Icons:** All non-deprecated icons from `@carbon/icons` are exported, organized by subcategory.
-- **25 Libraries:** Each subcategory becomes a separate `.xml` library file, ready to import.
+- **2,500+ Icons:** All icons from `@carbon/icons` are exported, organized by subcategory.
+- **26 Libraries:** Each subcategory becomes a separate `.xml` library file, ready to import.
 - **Colored Backgrounds:** Icons are composited onto a colored square background with configurable size and colors.
 - **Per-Category Styling:** Override background color, icon color, and sizes for specific subcategories.
 - **Group Shapes:** Optional resizable container shapes (colored border + strip + icon + label) for grouping other shapes in architecture diagrams, all bundled in a single `IBM Carbon - Groups.xml`.
@@ -160,22 +159,6 @@ Group style properties (defaults in parens):
 | `iconPaddingLeft` | `number` | Gap between strip and icon in px (`8`).             |
 | `labelGap`        | `number` | Gap between icon and label in px (`12`).            |
 | `fontSize`        | `number` | Label font size in px (`12`).                       |
-
-## Project Structure
-
-```
-.
-├── src/
-│   ├── config.ts       # Global config, style overrides, and helper
-│   ├── index.ts        # Entry point — reads metadata, groups icons, writes files
-│   ├── svgParser.ts    # SVG parsing and path normalization
-│   ├── composer.ts     # Composites icon SVG onto colored background
-│   └── generator.ts    # Generates draw.io library XML from shapes
-├── output/             # Generated .xml library files (gitignored)
-├── package.json
-├── tsconfig.json
-└── README.md
-```
 
 ## Contributing
 
